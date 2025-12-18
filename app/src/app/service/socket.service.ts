@@ -3,13 +3,14 @@ import { io, Socket } from 'socket.io-client';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { LoginService } from './login.service';
 import { Message } from '../interface/message.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocketService {
   public socket!: Socket;
-  private endPoint: string = '/';
+  private endPoint: string = environment.apiUrl;
   public connected$ = new BehaviorSubject<boolean>(false);
 
   constructor(private loginService: LoginService) {}
@@ -101,16 +102,21 @@ export class SocketService {
     isGroup: boolean,
     admins: string[] = []
   ): Promise<any> {
-    const response = await fetch(`/messages/conversations`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name, participants, isGroup, admins }),
-    });
+    const response = await fetch(
+      `${environment.apiUrl}/messages/conversations`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, participants, isGroup, admins }),
+      }
+    );
     return await response.json();
   }
 
   async getUserConversations(userId: string): Promise<any[]> {
-    const response = await fetch(`/messages/conversations/${userId}`);
+    const response = await fetch(
+      `${environment.apiUrl}/messages/conversations/${userId}`
+    );
     return await response.json();
   }
 

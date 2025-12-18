@@ -8,13 +8,15 @@ import {
 } from '../interface/user-register-interface';
 import { Observable } from 'rxjs';
 
+import { environment } from '../../environments/environment';
+
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   token: string = '';
   // endPoint = 'https://pkbvmxnl-3000.use2.devtunnels.ms/auth';
-  endPoint = '/auth';
+  endPoint = environment.apiUrl + '/auth';
 
   constructor(private http: HttpClient, private router: Router) {
     // Load token from localStorage on service initialization

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { LoginService } from './login.service';
 import { UserChat } from '../interface/user-chat.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -62,12 +63,16 @@ export class UserService {
 
   // Métodos para amigos
   async getFriends(userId: string): Promise<any[]> {
-    const response = await fetch(`/users/${userId}/friends`);
+    const response = await fetch(
+      `${environment.apiUrl}/users/${userId}/friends`
+    );
     return await response.json();
   }
 
   async getFriendRequests(userId: string): Promise<any[]> {
-    const response = await fetch(`/users/${userId}/friend-requests`);
+    const response = await fetch(
+      `${environment.apiUrl}/users/${userId}/friend-requests`
+    );
     return await response.json();
   }
 
@@ -75,41 +80,53 @@ export class UserService {
     userId: string,
     friendEmail: string
   ): Promise<void> {
-    const response = await fetch(`/users/friend-request/email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, friendEmail }),
-    });
+    const response = await fetch(
+      `${environment.apiUrl}/users/friend-request/email`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, friendEmail }),
+      }
+    );
     if (!response.ok) {
       throw { status: response.status };
     }
   }
 
   async acceptFriendRequest(userId: string, friendId: string): Promise<void> {
-    const response = await fetch(`/users/friend-request/accept`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, friendId }),
-    });
+    const response = await fetch(
+      `${environment.apiUrl}/users/friend-request/accept`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, friendId }),
+      }
+    );
     if (!response.ok) {
       throw { status: response.status };
     }
   }
 
   async rejectFriendRequest(userId: string, friendId: string): Promise<void> {
-    const response = await fetch(`/users/friend-request/reject`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId, friendId }),
-    });
+    const response = await fetch(
+      `${environment.apiUrl}/users/friend-request/reject`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId, friendId }),
+      }
+    );
     if (!response.ok) {
       throw { status: response.status };
     }
   }
   async removeFriend(userId: string, friendId: string): Promise<void> {
-    const response = await fetch(`/users/${userId}/friends/${friendId}`, {
-      method: 'DELETE',
-    });
+    const response = await fetch(
+      `${environment.apiUrl}/users/${userId}/friends/${friendId}`,
+      {
+        method: 'DELETE',
+      }
+    );
     if (!response.ok) {
       throw { status: response.status };
     }
