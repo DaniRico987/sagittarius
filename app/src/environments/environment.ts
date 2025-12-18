@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'YOUR_RENDER_URL_HERE',
+  apiUrl: 'https://sagittarius-api.onrender.com/',
 };
